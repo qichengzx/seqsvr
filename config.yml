@@ -1,0 +1,12 @@
+#app
+port: ':8000'
+
+#service
+step: 100
+
+#db
+mysql:
+  user: 'root'
+  password: ''
+  host: 'tcp(localhost:3306)'
+  database: 'sequence'
