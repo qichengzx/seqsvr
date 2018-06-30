@@ -11,17 +11,44 @@ SEQSVR
 * 唯一性：MySQL 自增 ID，永不重复
 * 高可靠：MySQL 持久化
 
-### 安装
-
-```shell
-go get github.com/qichengzx/seqsvr
-```
-
 ### 依赖项
+
+本项目使用下列优秀的项目作为必要组件。
 
 * gopkg.in/yaml.v2
 * github.com/go-sql-driver/mysql
 * github.com/satori/go.uuid
+
+### 安装
+
+**注意:需要在启动之前创建数据库并修改配置文件中数据库的配置。**
+
+go get 方式：
+
+需保证 $GOPATH/bin 在系统 PATH 中。
+
+```shell
+go get github.com/qichengzx/seqsvr
+seqsvr
+```
+单独编译：
+
+```shell
+git clone git@github.com:qichengzx/seqsvr.git
+cd seqsvr
+go build .
+./seqsvr
+```
+Docker 方式：
+
+Dockerfile 使用了 Docker 多阶段构建功能，需保证 Docker 版本在 17.05 及以上。详见：[Use multi-stage builds](https://docs.docker.com/develop/develop-images/multistage-build/)
+
+```shell
+git clone git@github.com:qichengzx/seqsvr.git
+cd seqsvr
+docker build seqsvr:latest .
+docker run -p 8000:8000 seqsvr:latest
+```
 
 ### 初始化数据库
 
@@ -60,12 +87,6 @@ mysql:
 ```
 
 可修改端口号及 MySQL 的配置。
-
-### 启动
-
-```shell
-seqsvr
-```
 
 ### 使用
 
