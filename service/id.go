@@ -22,6 +22,13 @@ func InitDB(conf MySQL) {
 		panic(err)
 	}
 
+	err = db.Ping()
+	if err != nil {
+		panic(err)
+	}
+
+	db.SetMaxIdleConns(conf.MaxIdle)
+	db.SetMaxOpenConns(conf.MaxOpen)
 }
 
 func New(uuid uuid.UUID) (int64, error) {

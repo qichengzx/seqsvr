@@ -17,6 +17,8 @@ type MySQL struct {
 	PassWord string `yaml:"password"`
 	Host     string `yaml:"host"`
 	Database string `yaml:"database"`
+	MaxIdle  int    `yaml:"maxidle"`
+	MaxOpen  int    `yaml:"maxopen"`
 }
 
 func NewConfig() *Config {
