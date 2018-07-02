@@ -83,7 +83,8 @@ mysql:
   password: ''
   host: 'tcp(localhost:3306)'
   database: 'sequence'
-
+  maxidle: 2
+  maxopen: 10
 ```
 
 可修改端口号及 MySQL 的配置。
