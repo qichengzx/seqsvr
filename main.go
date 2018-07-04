@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"sync"
 	"sync/atomic"
 )
 
@@ -18,6 +19,7 @@ var (
 	uid     = uuid.Must(uuid.NewV4())
 	host, _ = os.Hostname()
 	conf    *service.Config
+	mu      sync.Mutex
 )
 
 type H map[string]interface{}
@@ -45,11 +47,13 @@ func New(w http.ResponseWriter, r *http.Request) {
 	s := atomic.LoadInt64(&startID)
 
 	if s == 0 || curID == maxID {
+		mu.Lock()
 		id, err := service.New(uid)
+		mu.Unlock()
 		if err != nil {
 			log.Fatal(err)
 		}
-		log.Printf("get new id : %d for ip : %s\n", id, host)
+		log.Printf("get new id : %d for ip : %s，uuid : %s\n", id, host, uid)
 
 		atomic.StoreInt64(&startID, id*conf.STEP)
 		atomic.StoreInt64(&curID, id*conf.STEP)
