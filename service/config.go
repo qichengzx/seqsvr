@@ -22,12 +22,13 @@ type MySQL struct {
 }
 
 func NewConfig() *Config {
-	b, _ := ioutil.ReadFile("config.yml")
-	conf := new(Config)
-	yaml.Unmarshal(b, conf)
+	b, err := ioutil.ReadFile("config.yml")
 	if err != nil {
 		log.Fatalf("error: %v", err)
 	}
+
+	conf := new(Config)
+	yaml.Unmarshal(b, conf)
 
 	return conf
 }
