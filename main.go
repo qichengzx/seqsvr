@@ -48,17 +48,20 @@ func New(w http.ResponseWriter, r *http.Request) {
 
 	if s == 0 || curID == maxID {
 		mu.Lock()
-		id, err := service.New(uid)
-		mu.Unlock()
-		if err != nil {
-			log.Fatal(err)
+		s = atomic.LoadInt64(&startID)
+		if s == 0 || curID == maxID {
+			id, err := service.New(uid)
+			if err != nil {
+				log.Fatal(err)
+			}
+			log.Printf("get new id : %d for ip : %s，uuid : %s\n", id, host, uid)
+
+			atomic.StoreInt64(&startID, id*conf.STEP)
+			atomic.StoreInt64(&curID, id*conf.STEP)
+			atomic.StoreInt64(&maxID, (id+1)*conf.STEP)
 		}
-		log.Printf("get new id : %d for ip : %s，uuid : %s\n", id, host, uid)
 
-		atomic.StoreInt64(&startID, id*conf.STEP)
-		atomic.StoreInt64(&curID, id*conf.STEP)
-		atomic.StoreInt64(&maxID, (id+1)*conf.STEP)
-
+		mu.Unlock()
 		log.Println("start id get =====>", startID)
 	}
 
