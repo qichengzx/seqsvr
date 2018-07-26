@@ -65,6 +65,7 @@ func New(w http.ResponseWriter, r *http.Request) {
 		log.Println("start id get =====>", startID)
 	}
 
+	w.Header().Set("Content-Type", "application/json")
 	if !atomic.CompareAndSwapInt64(&curID, curID, curID+1) {
 		resp := response{
 			Code: -1,
@@ -77,8 +78,7 @@ func New(w http.ResponseWriter, r *http.Request) {
 
 	log.Printf("start id : %d, current id : %d, max id : %d\n", startID, curID, maxID)
 	log.Println("request end")
-
-	w.Header().Set("Content-Type", "application/json")
+	
 	resp := response{
 		Code: 0,
 		Msg:  "ok",
