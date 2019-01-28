@@ -10,5 +10,3 @@ mysql:
   password: ''
   host: 'tcp(localhost:3306)'
   database: 'sequence'
-  maxidle: 2
-  maxopen: 10
