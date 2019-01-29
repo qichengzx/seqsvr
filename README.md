@@ -47,7 +47,7 @@ The Docker "multi-stage" build feature is used, be ensure the Docker version is 
 ```shell
 git clone git@github.com:qichengzx/seqsvr.git
 cd seqsvr
-docker build seqsvr:latest .
+docker build -t seqsvr:latest .
 docker run -p 8000:8000 seqsvr:latest
 ```
 
@@ -84,8 +84,6 @@ mysql:
   password: ''
   host: 'tcp(localhost:3306)'
   database: 'sequence'
-  maxidle: 2
-  maxopen: 10
 ```
 
 ### Usage

@@ -79,7 +79,6 @@ func (svr *Service) nextID() (uint64, error) {
 	svr.mu.Lock()
 	s := atomic.LoadUint64(&svr.startID)
 	if s == 0 || svr.curID == svr.maxID {
-		fmt.Println("svr.curID == svr.maxID", svr.curID, svr.maxID)
 		id, err := svr.newDBID()
 		if err != nil {
 			log.Fatal(err)
